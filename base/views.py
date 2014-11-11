@@ -11,15 +11,15 @@ from db_wrapper import *
 
 def index(request):
     tables = get_tables()
-    x_axis = tables[0]
+    x_axis = tables[2]
     y_axis = tables[1]
     fixed = get_third_table_func(x_axis, y_axis)
     context = {'x_axis': x_axis,
                'y_axis': y_axis,
                'tables': tables,
                'fixed': get_third_table_func(x_axis, y_axis),
-               #'tablice': get_tablice_func(x_axis, y_axis, fixed['name'], fixed_values=[2,3])}
-                'tablice': get_tablice_func(x_axis, y_axis, fixed['name'], fixed_start=1, fixed_end=5)}
+                'tablice': get_tablice_func(x_axis, y_axis, fixed['name'], fixed_values=[2, 3])}
+                #'tablice': get_tablice_func(x_axis, y_axis, fixed['name'], fixed_start=1, fixed_end=5)}
     return render(request, 'main.html', context)
 
 
@@ -30,7 +30,8 @@ def get_third_table(request):
     params = request.POST
     x_axis = params.get('x_axis')
     y_axis = params.get('y_axis')
-    return HttpResponse(json.dumps(get_third_table_func(x_axis, y_axis)), content_type="application/json", status=200)
+    context = {'fixed': get_third_table_func(x_axis, y_axis)}
+    return render(request, 'fixed_values.html', context)
 
 
 def get_tablice_html(request):
