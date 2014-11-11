@@ -1,7 +1,6 @@
 {% if fixed.start %}
     <input type="date" value="{{ fixed.start }}">
     <input type="date" value="{{ fixed.end }}">
-</select>
 {% else %}
     <select id="fixed">
         {% for value in fixed.values %}
