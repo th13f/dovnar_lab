@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <Table name="Shops">
+        <DBName>base_shop</DBName>
+        <Type>String</Type>
+        <Column>name</Column>
+        <FactName>shop_id</FactName>
+    </Table>
+    <Table name="Types">
+        <DBName>base_type</DBName>
+        <Type>String</Type>
+        <Column>name</Column>
+        <FactName>type_id</FactName>
+    </Table>
+    <Table name="Date">
+        <DBName>base_day</DBName>
+        <Type>Date</Type>
+        <Column>date</Column>
+        <FactName>date_id</FactName>
+    </Table>
+</root>

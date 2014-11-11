@@ -1,0 +1,9 @@
+<table style="border: dotted">
+    {% for rows in tablice %}
+        <tr>
+        {% for cell in rows %}
+            <td>{{ cell }}</td>
+        {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
