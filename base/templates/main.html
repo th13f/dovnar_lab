@@ -18,7 +18,12 @@
 
 {% include 'fixed_values.html' %}
 
-<select>
+<select id="x_axis">
+    {% for table in tables %}
+          <option value="{{ table }}">{{ table }}</option>
+    {% endfor %}
+</select>
+<select id="y_axis">
     {% for table in tables %}
           <option value="{{ table }}">{{ table }}</option>
     {% endfor %}
