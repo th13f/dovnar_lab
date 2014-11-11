@@ -12,9 +12,14 @@
 
 {% include 'tablice.html' %}
 
- <select>
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="mercedes">Mercedes</option>
-  <option value="audi">Audi</option>
+<select>
+    {% for value in fixed.values %}
+          <option value="{{ value.0 }}">{{ value.1 }}</option>
+    {% endfor %}
+</select>
+
+<select>
+    {% for table in tables %}
+          <option value="{{ table }}">{{ table }}</option>
+    {% endfor %}
 </select>
