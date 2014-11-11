@@ -1,3 +1,7 @@
+{% load staticfiles %}
+
+ <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+
 <p>X axis: {{ x_axis }}</p>
 <p>Y axis: {{ y_axis }}</p>
 <p>Fixed table:{{ fixed.name }}</p>
@@ -12,11 +16,7 @@
 
 {% include 'tablice.html' %}
 
-<select>
-    {% for value in fixed.values %}
-          <option value="{{ value.0 }}">{{ value.1 }}</option>
-    {% endfor %}
-</select>
+{% include 'fixed_values.html' %}
 
 <select>
     {% for table in tables %}
