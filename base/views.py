@@ -58,21 +58,21 @@ def reports_list(request):
 
 
 @csrf_exempt
-def save_report(request):
+def save_report(request, report_name):
     if request.method != 'POST':
         return HttpResponse(json.dumps({'status': 'error'}), content_type='application/json', status=400)
     params = request.POST
     x_axis = params.get('x_axis')
     y_axis = params.get('y_axis')
-    fixed = params.get('fixed')
-    fixed_type = get_fixed_type_func(fixed)
+    fixed = get_third_table_func(x_axis, y_axis)
+    fixed_name = fixed["name"]
+    fixed_type = fixed["type"]
+    if "fixed[values]" in params:
+        fixed_str = params["fixed[values]"]
+    else:
+        fixed_str = "%s %s" % (params['fixed[start]'], params['fixed[end]'])
 
-    report = Report(x_axis=x_axis, y_axis=y_axis, fixed=fixed, fixed_type=fixed_type)
-    if fixed_type == 'date':
-        report.fixed_start = params.get('fixed_start')
-        report.fixed_end = params.get('fixed_end')
-    elif fixed_type == 'int':
-        report.fixed_values = str(params.get('fixed_values'))
+    report = Report(name=report_name, x_axis=x_axis, y_axis=y_axis, fixed=fixed_name, fixed_type=fixed_type, fixed_str=fixed_str)
 
     report.save()
 
