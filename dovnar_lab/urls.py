@@ -22,6 +22,8 @@ urlpatterns = patterns('base.views',
                        # reports api
                        url(r'^reports_list/?$', 'reports_list', name='reports_list'),
                        url(r'^save_report/(?P<report_name>.+)/?$', 'save_report', name='save_report'),
+                       url(r'^update_report/(?P<report_id>\d+)/?$', 'update_report', name='update_report'),
+                       url(r'^delete_report/(?P<report_id>\d+)/?$', 'delete_report', name='delete_report'),
                        url(r'^load_report/(?P<report_id>\d+)/?$', 'load_report', name='load_report'),
                        url(r'^download_report/(?P<report_id>\d+)/?$', 'download_report', name='download_report'),
 

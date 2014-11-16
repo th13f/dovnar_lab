@@ -18,7 +18,8 @@ def index(request):
                'y_axis': y_axis,
                'tables': tables,
                'fixed': get_third_table_func(x_axis, y_axis),
-                'tablice': get_tablice_func(x_axis, y_axis, fixed['name'], fixed_values={"values": "[2, 3]"})}
+                'tablice': get_tablice_func(x_axis, y_axis, fixed['name'], fixed_values={"values": "[2, 3]"}),
+                'reports': Report.objects.all()}
                 #'tablice': get_tablice_func(x_axis, y_axis, fixed['name'], fixed_start=1, fixed_end=5)}
     return render(request, 'main.html', context)
 
@@ -53,8 +54,8 @@ def get_tablice_json(request):
 # reports api
 def reports_list(request):
     reports = Report.objects.all()
-    response_data = {'reports': reports}
-    return HttpResponse(json.dumps(response_data), content_type="application/json", status=200)
+    context = {'reports': reports}
+    return render(request, 'reports_list.html', context)
 
 
 @csrf_exempt
@@ -78,10 +79,54 @@ def save_report(request, report_name):
 
     return HttpResponse(json.dumps({'status': 'ok'}), content_type='application/json', status=200)
 
+@csrf_exempt
+def update_report(request, report_id):
+    if request.method != 'POST':
+        return HttpResponse(json.dumps({'status': 'error'}), content_type='application/json', status=400)
+    params = request.POST
+    x_axis = params.get('x_axis')
+    y_axis = params.get('y_axis')
+    fixed = get_third_table_func(x_axis, y_axis)
+    fixed_name = fixed["name"]
+    fixed_type = fixed["type"]
+    report_name = params["name"]
+    if "fixed[values]" in params:
+        fixed_str = params["fixed[values]"]
+    else:
+        fixed_str = "%s %s" % (params['fixed[start]'], params['fixed[end]'])
+
+    report = get_object_or_404(Report, id=report_id)
+    if report_name:
+        report.name = report_name
+    report.x_axis = x_axis
+    report.y_axis = y_axis
+    report.fixed = fixed_name
+    report.fixed_type = fixed_type
+    report.fixed_str = fixed_str
+
+    report.save()
+
+    return HttpResponse(json.dumps({'status': 'ok'}), content_type='application/json', status=200)
+
+
+@csrf_exempt
+def delete_report(request, report_id):
+    report = get_object_or_404(Report, id=report_id)
+    report.delete()
+    return HttpResponse({"status": "ok"}, status=200)
 
 def load_report(request, report_id):
     report = get_object_or_404(Report, id=report_id)
-    return render(request, 'main.html', report.to_dict())
+    params = {"x_axis": report.x_axis,
+              "y_axis": report.y_axis}
+    if report.fixed_type == "String":
+        params["fixed[values]"] = report.fixed_str
+    elif report.fixed_type == "Date":
+        fixed_dates = report.fixed_str.split(" ")
+        params["fixed[start]"] = fixed_dates[0]
+        params["fixed[end]"] = fixed_dates[1]
+    tablice = get_tablice_from_params(params)
+    return render(request, 'tablice.html', {'tablice': tablice})
 
 
 def download_report(request, report_id):

@@ -1,0 +1,12 @@
+{% for report in reports %}
+    <tr>
+        <td class="report_id" style="display: none;">{{ report.id }}</td>
+        <td>{{ report.name }}</td>
+        <td>{{ report.x_axis }}</td>
+        <td>{{ report.y_axis }}</td>
+        <td>{{ report.updated_at }}</td>
+        <td><input class="overwrite_report" type="button" value="overwrite"></td>
+        <td><input class="load_report" type="button" value="load"></td>
+        <td><input class="overwrite_report" type="button" value="delete"></td>
+    </tr>
+{% endfor %}
