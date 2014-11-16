@@ -18,7 +18,7 @@ def index(request):
                'y_axis': y_axis,
                'tables': tables,
                'fixed': get_third_table_func(x_axis, y_axis),
-                'tablice': get_tablice_func(x_axis, y_axis, fixed['name'], fixed_values=[2, 3])}
+                'tablice': get_tablice_func(x_axis, y_axis, fixed['name'], fixed_values={"values": "[2, 3]"})}
                 #'tablice': get_tablice_func(x_axis, y_axis, fixed['name'], fixed_start=1, fixed_end=5)}
     return render(request, 'main.html', context)
 
@@ -34,12 +34,13 @@ def get_third_table(request):
     return render(request, 'fixed_values.html', context)
 
 
+@csrf_exempt
 def get_tablice_html(request):
     if request.method != 'POST':
         return HttpResponse(json.dumps({'status': 'error'}), content_type='application/json', status=400)
     params = request.POST
     tablice = get_tablice_from_params(params)
-    return render(request, 'main.html', {'tablice': tablice})
+    return render(request, 'tablice.html', {'tablice': tablice})
 
 
 def get_tablice_json(request):

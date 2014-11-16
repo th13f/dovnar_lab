@@ -14,8 +14,8 @@ def get_third_table_func(x_axis, y_axis):
     return info
 
 
-def get_tablice_func(x_axis, y_axis, fixed, fixed_values=None, fixed_start=None, fixed_end=None):
-    tablice = get_tablice(x_axis, y_axis, fixed, fixed_values, fixed_start, fixed_end)
+def get_tablice_func(x_axis, y_axis, fixed, fixed_values):
+    tablice = get_tablice(x_axis, y_axis, fixed, fixed_values)
     return tablice
 
 
@@ -27,11 +27,12 @@ def get_tablice_from_params(params):
     x_axis = params.get('x_axis')
     y_axis = params.get('y_axis')
     fixed = get_third_table_func(x_axis, y_axis)
-    tablice = None
-    if fixed['type'] == 'String':
-        tablice = get_tablice_func(x_axis, y_axis, fixed['name'], fixed_values=params.get('fixed_values'))
-    elif fixed['type'] == 'Date':
-        tablice = get_tablice_func(x_axis, y_axis, fixed['name'],
-                                   fixed_start=params.get('fixed_start'),
-                                   fixed_end=params.get('fixed_end'))
+
+    if "fixed[values]" in params:
+        fixed_param = {"values": params["fixed[values]"]}
+    elif "fixed[value]" in params:
+        fixed_param = {"value": params.get("fixed[value]")}
+    else:
+        fixed_param = {"start": params.get('fixed[start]'), "end": params.get('fixed[end]')}
+    tablice = get_tablice_func(x_axis, y_axis, fixed['name'], fixed_param)
     return tablice

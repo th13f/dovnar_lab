@@ -1,8 +1,9 @@
 {% if fixed.start %}
-    <input type="date" value="{{ fixed.start }}">
-    <input type="date" value="{{ fixed.end }}">
+    <input id="fixed_start" type="date" value="{{ fixed.start }}">
+    <input id="fixed_end" type="date" value="{{ fixed.end }}">
+    <input id="submit_dates" type="button" value="load">
 {% else %}
-    <select id="fixed">
+    <select id="fixed_selector" multiple="multiple">
         {% for value in fixed.values %}
               <option value="{{ value.0 }}">{{ value.1 }}</option>
         {% endfor %}

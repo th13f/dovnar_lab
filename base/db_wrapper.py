@@ -66,7 +66,7 @@ def get_indices_mapping(table_name):
         i+=1
     return mapping
 
-def get_tablice(x_axis,y_axis,fixed, fixed_values=None, fixed_start=None, fixed_end=None):
+def get_tablice(x_axis,y_axis,fixed, fixed_values):
     x_info = get_table_info(x_axis)
     x_values = get_values(x_axis)
     x_mapping = get_indices_mapping(x_axis)
@@ -76,15 +76,24 @@ def get_tablice(x_axis,y_axis,fixed, fixed_values=None, fixed_start=None, fixed_
     y_mapping = get_indices_mapping(y_axis)
 
     fixed_info = get_table_info(fixed)
-
-    if not fixed_values:
-        fixed_start_date = date_parser.parse(get_value(fixed, fixed_start))
-        fixed_end_date = date_parser.parse(get_value(fixed, fixed_end))
+    if "value" in fixed_values:
+        fixed_values = [int(fixed_values['value']),]
+    elif "start" in fixed_values and "end" in fixed_values:
+        fixed_start_date = date_parser.parse(fixed_values["start"])
+        fixed_end_date = date_parser.parse(fixed_values["end"])
         fixed_values = [x[0] if date_parser.parse(x[1])>=fixed_start_date and date_parser.parse(x[1])<=fixed_end_date
                         else 0
                         for x in get_values(fixed)]
+    else:
+        fixed_values = fixed_values['values'][1:-1]
+        fixed_values = [int(x) for x in fixed_values.split(", ")]
+
+
+    fixed_str = str(tuple(fixed_values))
+    if fixed_str[-2] == ",":
+        fixed_str = fixed_str[:-2] + ")"
     query = "select %s, %s, value from base_fact where %s in %s;" % (x_info['fact_name'], y_info['fact_name'],
-                                                                    fixed_info['fact_name'], str(tuple(fixed_values)))
+                                                                    fixed_info['fact_name'], fixed_str)
     cursor = connection.cursor()
     cursor.execute(query)
     rows = cursor.fetchall()

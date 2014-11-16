@@ -1,0 +1,17 @@
+<select id="x_axis">
+    <option value="">-----</option>
+    {% for table in tables %}
+          <option value="{{ table }}">{{ table }}</option>
+    {% endfor %}
+</select>
+
+<select id="y_axis">
+    <option value="">-----</option>
+    {% for table in tables %}
+          <option value="{{ table }}">{{ table }}</option>
+    {% endfor %}
+</select>
+
+<div id="fixed">
+
+</div>
