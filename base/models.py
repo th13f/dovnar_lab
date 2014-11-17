@@ -24,12 +24,15 @@ class Report(models.Model):
 
         if self.fixed_type == 'String':
             result['fixed[values]'] = self.fixed_str
+            fixed_values = {'values': self.fixed_str}
         elif self.fixed_type == 'Date':
             dates = self.fixed_str.split(" ")
             result['fixed[start]'] = dates[0]
             result['fixed[end]'] = dates[1]
+            fixed_values = {'start': dates[0],
+                            'end': dates[1]}
 
-        tablice = get_tablice_func(self.x_axis, self.y_axis, self.fixed, self.fixed_str)
+        tablice = get_tablice_func(self.x_axis, self.y_axis, self.fixed, fixed_values)
         result['tablice'] = tablice
 
         return result
