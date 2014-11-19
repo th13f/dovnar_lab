@@ -1,11 +1,11 @@
-<select id="x_axis">
+<select id="x_axis" class="selectpicker"> 
     <option value="">-----</option>
     {% for table in tables %}
           <option value="{{ table }}">{{ table }}</option>
     {% endfor %}
 </select>
 
-<select id="y_axis">
+<select id="y_axis" class="selectpicker">
     <option value="">-----</option>
     {% for table in tables %}
           <option value="{{ table }}">{{ table }}</option>

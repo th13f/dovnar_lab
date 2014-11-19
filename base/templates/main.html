@@ -5,18 +5,52 @@
         <script src="{% static 'js/jquery-2.1.1.js' %}"></script>
         <script src="{% static 'js/main_scripts.js' %}"></script>
         <script src="{% static 'js/reports.js' %}"></script>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+        <script>
+
+        </script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-select.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
 
         <title></title>
     </head>
     <body>
-        <div id="working_zone" class="inline">
-            {% include 'selection_block.html' %}
-            {% include 'tablice.html' %}
+<div class="navbar navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><img src=""></img></a>
         </div>
-        <div id="reports_zone" class="inline" style="margin-left: 50px">
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#about">SuperReports</a></li>
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+        <div id="working_zone" class="inline">
+        <div class="jumbotron">
+            {% include 'selection_block.html' %}
+            </div>
+        <div class="jumbotron">
+            {% include 'tablice.html' %}
+            </div>
+        </div>
+        <div class="jumbotron">
+        <div id="reports_zone">
             {% include 'reports.html' %}
         </div>
+        </div>
         <br class="clearBoth" />
+        </div>
     </body>
 </html>
