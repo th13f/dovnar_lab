@@ -5,7 +5,7 @@ $(document).ready(function () {
         });
         $(".load_report").bind( "click", report_load);
         $(".delete_report").bind( "click", report_delete);
-        $(".overwrite_report").bind( "click", report_overwrite());
+        $(".overwrite_report").bind( "click", report_overwrite);
     }
 
     function report_delete() {
